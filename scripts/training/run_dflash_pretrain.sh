@@ -34,7 +34,7 @@ which python
 
 # ── Megatron-LM path (for pretrain_dflash.py + dflash_builders.py) ──────────
 MEGATRON_PATH="${REPO_ROOT}/3rdparty/Megatron-LM"
-export PYTHONPATH="${MEGATRON_PATH}:${PYTHONPATH}"
+export PYTHONPATH="${MEGATRON_PATH}:${PYTHONPATH:-}"
 
 # ── Distributed (single node) ───────────────────────────────────────────────
 export CUDA_DEVICE_MAX_CONNECTIONS=1
