@@ -129,6 +129,21 @@ GPT_MODEL_ARGS=(
     --v-head-dim ${MLA_V_HEAD_DIM}
     --qk-layernorm
     --swiglu
+    --rotary-scaling-factor ${ROTARY_SCALING_FACTOR:-4}
+    --mscale-all-dim ${MSCALE_ALL_DIM:-1.0}
+    --original-max-position-embeddings ${ORIGINAL_MAX_POSITION_EMBEDDINGS:-65536}
+
+    # DSV4 hybrid attention
+    --experimental-attention-variant dsv4_hybrid
+    --no-dsa-kernel-fusion
+    --csa-compress-ratios ${CSA_COMPRESS_RATIOS:-([0,0]+[128,4,128,4,128]+[0])}
+    --csa-window-size ${CSA_WINDOW_SIZE:-128}
+    --csa-compress-rotary-base ${CSA_COMPRESS_ROTARY_BASE:-10000}
+    --dsa-indexer-n-heads ${DSA_INDEXER_N_HEADS:-64}
+    --dsa-indexer-head-dim ${DSA_INDEXER_HEAD_DIM:-128}
+    --dsa-indexer-topk ${DSA_INDEXER_TOPK:-512}
+    --dsa-indexer-loss-coeff ${DSA_INDEXER_LOSS_COEFF:-1e-2}
+    --dsa-indexer-use-sparse-loss
 
     --num-experts ${NUM_EXPERTS}
     --moe-ffn-hidden-size ${MOE_FFN_HIDDEN_SIZE}
@@ -146,8 +161,12 @@ GPT_MODEL_ARGS=(
     --use-fused-mhc
     --recompute-modules mhc
 
-    # DSpark head (optional, uncomment to enable)
-    # --dspark-markov-rank 256
+    # DSpark head (uncomment to enable)
+    --dspark-markov-rank 256
+    # --dspark-loss-decay-gamma 4.0
+    # --dspark-l1-loss-alpha 0.9
+    # --dspark-confidence-head-alpha 1.0
+    # --dspark-confidence-loss-scale 1.0
 )
 
 # ── DFlash args ─────────────────────────────────────────────────────────────
