@@ -158,7 +158,6 @@ GPT_MODEL_ARGS=(
     --enable-hyper-connections
     --num-residual-streams 4
     --mhc-sinkhorn-iterations 20
-    --use-fused-mhc
     --recompute-modules mhc
 
     # DSpark head (uncomment to enable)
