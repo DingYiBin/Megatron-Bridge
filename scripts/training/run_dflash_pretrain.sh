@@ -22,12 +22,15 @@
 #
 # Example:
 #   bash scripts/training/run_dflash_pretrain.sh /path/to/data/mydataset_text_document
+#   bash scripts/training/run_dflash_pretrain.sh /public/workspace/dyb/megatron-dataset-dpsk/split/a-m-team/AM-DeepSeek-Distilled-40M/code_r1_1pass_text_document
 
 set -euo pipefail
 
 # ── Script path resolution ──────────────────────────────────────────────────
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
+source $REPO_ROOT/.venv/bin/activate
+which python
 
 # ── Megatron-LM path (for pretrain_dflash.py + dflash_builders.py) ──────────
 MEGATRON_PATH="${REPO_ROOT}/3rdparty/Megatron-LM"
@@ -202,7 +205,7 @@ echo "  Entry:       ${MEGATRON_PATH}/pretrain_dflash.py"
 echo "========================================"
 
 # ── Launch ──────────────────────────────────────────────────────────────────
-uv run python -m torch.distributed.run "${DISTRIBUTED_ARGS[@]}" \
+python -m torch.distributed.run "${DISTRIBUTED_ARGS[@]}" \
     "${MEGATRON_PATH}/pretrain_dflash.py" \
     "${GPT_MODEL_ARGS[@]}" \
     "${TRAINING_ARGS[@]}" \
